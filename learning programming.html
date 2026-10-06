@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>CodeQuest</title>
+<style>
+:root{--a:#00ff9c;--bg:#000;--tx:#f2f5ff;--cd:rgba(255,255,255,.04);--bd:rgba(255,255,255,.12);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,Segoe UI,Arial,sans-serif;min-height:100vh}
+#bg{position:fixed;inset:0;width:100%;height:100%;opacity:.5;z-index:0}
+.glow{position:fixed;inset:-20%;background:var(--a);opacity:.1;transition:background .9s;mask-image:radial-gradient(circle at 50% 0,#000,transparent 65%);-webkit-mask-image:radial-gradient(circle at 50% 0,#000,transparent 65%);z-index:0;pointer-events:none}
+main{position:relative;z-index:1;max-width:980px;margin:auto;padding:24px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pts{padding:6px 14px;border:1px solid var(--a);border-radius:99px;color:var(--a);font-weight:700;transition:.8s}
+button{font:inherit;color:inherit;cursor:pointer}
+.back{background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:6px 12px}
+.hero{font-size:clamp(40px,9vw,76px);margin:30px 0 4px;text-align:center;letter-spacing:-2px}
+.hero span{color:var(--a);text-shadow:0 0 28px var(--a);transition:.8s}
+.sub{text-align:center;opacity:.8;margin:0 0 50px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:22px}
+.logo{position:relative;background:var(--cd);border:1px solid var(--bd);border-radius:22px;padding:22px 8px;backdrop-filter:blur(8px);transition:transform .35s cubic-bezier(.3,1.6,.5,1),box-shadow .35s,border-color .35s;animation:rise .7s both}
+.logo:nth-child(2){animation-delay:.08s}.logo:nth-child(3){animation-delay:.16s}.logo:nth-child(4){animation-delay:.24s}.logo:nth-child(5){animation-delay:.32s}.logo:nth-child(6){animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(30px) scale(.9)}}
+.logo b{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 10px;border-radius:18px;background:var(--c);color:#fff;font:800 24px monospace;box-shadow:0 0 24px var(--c)}
+.logo em{font-style:normal;font-weight:700}
+.logo:hover{transform:translateY(-8px) scale(1.06);border-color:var(--c);box-shadow:0 0 34px -4px var(--c);z-index:5}
+.tip{position:absolute;left:50%;bottom:calc(100% + 12px);width:210px;transform:translateX(-50%) translateY(14px) scale(.7);opacity:0;pointer-events:none;background:#0b1020;color:#e8f0ff;border:1px solid var(--c);border-radius:14px;padding:12px;font-size:13px;text-align:left;transition:.3s cubic-bezier(.3,1.6,.5,1);box-shadow:0 0 24px -4px var(--c)}
+.tip h4{margin:0 0 4px;color:var(--c);font-size:15px}.tip small{display:block;margin-top:6px;opacity:.7}
+.logo:hover .tip,.logo:focus-visible .tip{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.tabs{display:flex;gap:8px;margin:20px 0;flex-wrap:wrap}
+.tab{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:9px 18px;transition:.3s}
+.tab.on{background:var(--a);color:#000;font-weight:700}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:18px;padding:20px;backdrop-filter:blur(8px);animation:rise .5s both;margin-bottom:14px;line-height:1.6}
+pre{background:#050810;color:#9dffcf;padding:14px;border-radius:12px;overflow-x:auto;border-left:3px solid var(--a)}
+.lv{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:10px;text-align:left}
+.lv[disabled]{opacity:.45;cursor:not-allowed}
+.opt{display:block;width:100%;margin:8px 0;padding:13px;text-align:left;background:var(--cd);border:1px solid var(--bd);border-radius:12px;transition:.25s}
+.opt:hover:not([disabled]){border-color:var(--a);transform:translateX(6px)}
+.opt.ok{background:#12b76a;color:#fff}.opt.no{background:#e5484d;color:#fff;animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.bar{height:8px;background:var(--cd);border-radius:9px;overflow:hidden;margin-bottom:14px}.bar i{display:block;height:100%;background:var(--a);transition:width .5s}
+.big{font-size:56px;font-weight:800;color:var(--a);text-align:center}
+.go{background:var(--a);color:#000;border:0;border-radius:12px;padding:11px 22px;font-weight:700}
+label{display:block;margin:8px 0}
+
+.logo{background:linear-gradient(160deg,#0c0c0c,#000);border:1px solid #222;border-radius:26px}
+.logo::before{content:"";position:absolute;inset:-1px;border-radius:27px;padding:1px;background:conic-gradient(from var(--r,0deg),transparent 0 70%,var(--c) 90%,transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;animation:spin 5s linear infinite;pointer-events:none}
+@property --r{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes spin{to{--r:360deg}}
+.logo:hover::before{opacity:1;animation-duration:1.5s}
+.logo b{border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff4,var(--c) 60%);animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-5px)}}
+.hero{background:linear-gradient(90deg,#fff,var(--a),#fff);background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite;font-weight:900}
+.hero span{color:transparent;-webkit-text-fill-color:transparent;text-shadow:none}
+@keyframes shine{to{background-position:200% 0}}
+.card,.opt,.tab,.back{background:#0a0a0a;border-color:#222}
+.tab.on{box-shadow:0 0 20px var(--a)}.go{box-shadow:0 0 22px var(--a)}
+.pts{background:#000;box-shadow:0 0 16px -2px var(--a)}
+.tip{background:#000}
+</style></head><body>
+<canvas id="bg"></canvas><div class="glow"></div>
+<main><div class="top"><button class="back" onclick="home()">⌂ Home</button><div class="pts" id="pts"></div></div><div id="app"></div></main>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S={};try{S=JSON.parse(localStorage.getItem('cq')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('cq',JSON.stringify(S))}catch(e){}};
+const LV=['🟢 Easy','🟡 Medium','🟠 Hard','🔴 Expert','💀 Impossible'];
+const L={
+html:{n:'HTML',c:'#e34f26',s:'</>',d:'The skeleton of every web page: headings, links, images, forms.',w:['<div>','<a>','<img>','<h1>','<form>','<nav>','<p>'],
+learn:'HTML describes the structure of a page using tags. Every page has a head (settings) and a body (what people see).',code:'<h1>Hello!</h1>\n<a href="https://example.com">Visit</a>\n<img src="cat.png" alt="A cat">',
+proj:['Create index.html with a title and an h1','Add a nav with 3 links','Add an About section with an image (with alt text)','Add a contact form with name + email','Validate it at validator.w3.org'],
+q:`Which tag makes the biggest heading?|<h1>|<h6>|<head>|<title>
+Which tag creates a link?|<a>|<link>|<href>|<url>
+Which attribute gives an image text for screen readers?|alt|src|title|href
+Which tag makes an unordered list?|<ul>|<ol>|<li>|<list>
+Which tag holds the visible page content?|<body>|<head>|<meta>|<script>
+Which tag makes a line break?|<br>|<lb>|<break>|<hr>
+Which tag makes a text box in a form?|<input>|<textbox>|<text>|<field>
+Which tag is meant for navigation links?|<nav>|<menu1>|<links>|<aside>
+What does <!DOCTYPE html> declare?|The HTML5 document type|A CSS file|A script|A comment
+Which tag creates a table row?|<tr>|<td>|<th>|<row>`},
+css:{n:'CSS',c:'#1572b6',s:'{ }',d:'Make pages beautiful: colors, layouts, animations.',w:['color:','flex','grid','margin','@keyframes','hover','radius'],
+learn:'CSS styles HTML. A rule has a selector and declarations. Flexbox and grid arrange layouts; keyframes animate.',code:'.card{\n  display:flex;\n  border-radius:16px;\n  transition:.3s;\n}\n.card:hover{transform:scale(1.05)}',
+proj:['Style a page with a color palette using CSS variables','Build a flex navbar','Make a 3-column responsive card grid','Add hover animations','Add a dark mode with prefers-color-scheme'],
+q:`Which property sets text color?|color|font-color|text-style|fg
+Which selects the element with id "box"?|#box|.box|box|*box
+Which selects class "card"?|.card|#card|card|@card
+Which property adds space outside the border?|margin|padding|gap1|spacing
+How do you enable flexbox?|display:flex|flex:on|position:flex|layout:flex
+Which property rounds corners?|border-radius|corner|round|border-curve
+Which unit is relative to the root font size?|rem|px|pt|cm
+Which keeps an element visible while scrolling?|position:sticky|float:top|display:stick|scroll:fix
+Which at-rule defines animation steps?|@keyframes|@steps|@motion|@animate
+Which property sets stacking order?|z-index|stack|order-z|layer`},
+js:{n:'JavaScript',c:'#f7b500',s:'JS',d:'The language of the web: make pages interactive.',w:['const','let','=>','async','await','map()','fetch'],
+learn:'JavaScript runs in the browser. Use const/let for variables, functions for logic, and the DOM to change the page.',code:'const nums=[1,2,3];\nconst dbl=nums.map(n=>n*2);\nconsole.log(dbl); // [2,4,6]',
+proj:['Build a counter with + and - buttons','Make a to-do list that adds and removes items','Fetch data from a public API and show it','Save the list with localStorage','Add keyboard shortcuts'],
+q:`Which keyword declares a constant?|const|let|fix|var1
+What is typeof "hi"?|string|text|char|undefined
+Which prints to the console?|console.log()|print()|echo()|log.console()
+Which adds an item to the end of an array?|push()|pop()|add()|append()
+What does === check?|Strict equality|Assignment|Loose equality|Not equal
+Which selects an element by id?|document.getElementById()|document.id()|dom.get()|select.id()
+Which array method transforms every item?|map()|filter()|find()|some()
+What does JSON.parse do?|String to object|Object to string|Sorts keys|Deletes keys
+Which is an arrow function?|x => x*2|x -> x*2|function => x|=> x
+Which keyword waits for a Promise?|await|pause|hold|stop`},
+py:{n:'Python',c:'#3776ab',s:'Py',d:'Beginner-friendly: automation, data, AI and more.',w:['def','import','print','self','lambda','for i','None'],
+learn:'Python uses indentation instead of braces. It is great for scripts, data and AI.',code:'def greet(name):\n    return f"Hello {name}"\n\nfor i in range(3):\n    print(greet("Sam"), i)',
+proj:['Number guessing game','Command-line to-do list saved to a file','Password strength checker','Weather fetcher using an API','Simple quiz game with scoring'],
+q:`Which prints text?|print("hi")|echo "hi"|console.log("hi")|printf("hi")
+Which symbol starts a comment?|#|//|<!--|--
+Which is a list?|[1,2,3]|{1,2,3}|(1,2,3)|<1,2,3>
+What does len("abc") return?|3|2|4|"abc"
+Which keyword defines a function?|def|func|function|fn
+Which loops 5 times (0 to 4)?|for i in range(5)|for(i=0;i<5)|loop 5|foreach 5
+Which stores key-value pairs?|dict|list|tuple|array
+What is 7 // 2?|3|3.5|4|2
+How do you import a module?|import math|using math|include math|require math
+Which handles errors?|try / except|try / catch|catch|error`},
+sql:{n:'SQL',c:'#00a67e',s:'DB',d:'Talk to databases: store, search and combine data.',w:['SELECT','FROM','WHERE','JOIN','INSERT','GROUP BY','COUNT'],
+learn:'SQL queries databases. SELECT reads, INSERT adds, UPDATE changes, DELETE removes. JOIN combines tables.',code:"SELECT name, COUNT(*)\nFROM users\nWHERE age > 18\nGROUP BY name\nORDER BY name;",
+proj:['Design a students + courses database','Insert 10 rows of sample data','Write a JOIN listing each student with courses','Find the top 3 by grade','Add a PRIMARY KEY and a FOREIGN KEY'],
+q:`Which reads rows?|SELECT|GET|READ|FETCH
+Which filters rows?|WHERE|FILTER|IF|FIND
+Which sorts results?|ORDER BY|SORT BY|GROUP BY|ARRANGE
+Which adds a row?|INSERT INTO|ADD ROW|PUSH|APPEND
+Which counts rows?|COUNT(*)|SUM(*)|TOTAL()|NUM()
+Which combines tables?|JOIN|MERGE|CONNECT|LINK
+Which removes rows?|DELETE|DROP ROW|REMOVE|CUT
+Which uniquely identifies each row?|PRIMARY KEY|FOREIGN KEY|INDEX KEY|UNIQUE ID
+Which groups rows for aggregates?|GROUP BY|ORDER BY|SPLIT BY|CLUSTER
+Which changes existing data?|UPDATE|MODIFY|ALTER ROW|CHANGE`},
+sec:{n:'Cyber Security',c:'#ff2e63',s:'🛡',d:'Ethical hacking: spot vulnerabilities and defend against them.',w:['XSS','SQLi','0x41','sudo','hash','nmap','TLS'],
+learn:'Ethical hackers find weaknesses so they can be fixed, always with written permission. Learn the classic vulnerabilities (injection, XSS, CSRF, weak passwords) and the defenses.',code:'// VULNERABLE (never build queries by concatenation)\ndb.query("SELECT * FROM users WHERE id="+id);\n\n// SAFE: parameterized\ndb.query("SELECT * FROM users WHERE id=?",[id]);',
+proj:['Review a small login form and list 5 risks','Rewrite a vulnerable query as a parameterized one','Create a strong password policy','Set up a legal lab (e.g. DVWA in a VM) and log findings','Write a one-page vulnerability report with fixes'],
+q:`Which attack injects SQL through user input?|SQL injection|Phishing|DDoS|Sniffing
+Best defense against SQL injection?|Parameterized queries|Hiding the form|Longer URLs|Bigger server
+What does XSS stand for?|Cross-Site Scripting|Extra Secure Server|XML Style Sheets|Cross-System Sync
+Safest way to store passwords?|Salted hash (bcrypt/argon2)|Plain text|Base64|Reversible encryption
+What does HTTPS add?|Encrypted traffic|Faster CSS|More ads|Free hosting
+What does MFA mean?|Multiple verification factors|Max file access|Manual firewall audit|Mail from admin
+What is phishing?|Tricking users into giving data|A port scan|A disk wipe|A CPU test
+What does an ethical hacker need first?|Written permission|A VPN|The admin password|A rootkit
+Which helps stop CSRF?|Anti-CSRF tokens|Larger cookies|Autocomplete|Inline scripts
+What is least privilege?|Give only the access needed|Give everyone admin|Share passwords|Disable logs`}
+};
+const cv=$('#bg'),cx=cv.getContext('2d');let words=['{ }','</>','01','fn','#'],col='#00ff9c',dr=[];
+function size(){cv.width=innerWidth;cv.height=innerHeight;dr=Array(Math.ceil(innerWidth/16)).fill(0).map(()=>Math.random()*-40)}
+function tick(){cx.globalCompositeOperation='destination-out';cx.fillStyle='rgba(0,0,0,.1)';cx.fillRect(0,0,cv.width,cv.height);cx.globalCompositeOperation='source-over';cx.fillStyle=col;cx.font='14px monospace';
+dr.forEach((y,i)=>{const w=words[(Math.random()*words.length)|0];cx.fillText(w[(Math.random()*w.length)|0],i*16,y*16);dr[i]=y*16>cv.height&&Math.random()>.97?0:y+1})}
+addEventListener('resize',size);size();setInterval(tick,60);
+function setLang(k){col=k?L[k].c:'#00ff9c';words=k?L[k].w:['{ }','</>','01','fn','#'];document.documentElement.style.setProperty('--a',col)}
+function pts(){$('#pts').textContent='⭐ '+Object.values(S).reduce((a,b)=>a+b*10,0)+' XP'}
+function home(){setLang(null);pts();$('#app').innerHTML=`<h1 class=hero>Code<span>Quest</span></h1><p class=sub>Learn it. Test it. Build it. Hover a logo, click to start.</p><div class=grid>${Object.entries(L).map(([k,l])=>`<button class=logo style="--c:${l.c}" onclick="openL('${k}')"><b>${l.s}</b><em>${l.n}</em><div class=tip><h4>${l.n}</h4>${l.d}<small>Best: ${S[k]||0}/10 · click to learn →</small></div></button>`).join('')}</div>`}
+function openL(k,t='learn'){setLang(k);const l=L[k];let h=`<h2 style="margin:20px 0 0">${l.n}</h2><div class=tabs>${[['learn','📖 Learn'],['quiz','🎯 Exam'],['proj','🛠 Project']].map(([x,n])=>`<button class="tab ${x==t?'on':''}" onclick="openL('${k}','${x}')">${n}</button>`).join('')}</div>`;
+if(t=='learn')h+=`<div class=card><p>${esc(l.learn)}</p><pre>${esc(l.code)}</pre></div>`;
+if(t=='quiz')h+=LV.map((v,i)=>`<button class="card lv" ${i?'disabled':`onclick="quiz('${k}')"`}><span>${v}</span><span>${i?'🔒 coming soon':'10 questions · best '+(S[k]||0)+'/10'}</span></button>`).join('');
+if(t=='proj')h+=`<div class=card><b>Project: build it yourself</b>${l.proj.map(p=>`<label><input type=checkbox> ${esc(p)}</label>`).join('')}</div>`;
+$('#app').innerHTML=h}
+let Q;
+function quiz(k){const qs=L[k].q.split('\n').map(r=>r.split('|')).sort(()=>Math.random()-.5);Q={k,qs,i:0,s:0};ask()}
+function ask(){const r=Q.qs[Q.i],o=r.slice(1).map((t,j)=>[t,!j]).sort(()=>Math.random()-.5);
+$('#app').innerHTML=`<div class=card><div class=bar><i style="width:${Q.i*10}%"></i></div><small>Question ${Q.i+1}/10 · Score ${Q.s}</small><h3>${esc(r[0])}</h3>${o.map((x,j)=>`<button class=opt data-ok="${x[1]?1:0}">${esc(x[0])}</button>`).join('')}</div>`;
+document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=b.dataset.ok=='1';if(ok)Q.s++;document.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.ok=='1')x.classList.add('ok')});if(!ok)b.classList.add('no');setTimeout(()=>{Q.i++;Q.i<10?ask():end()},900)})}
+function end(){const k=Q.k,s=Q.s;S[k]=Math.max(S[k]||0,s);save();pts();const rk=s==10?'🏆 Master':s>=7?'⭐ Pro':s>=4?'🌱 Learner':'🐣 Rookie';
+$('#app').innerHTML=`<div class=card style="text-align:center"><div class=big>${s}/10</div><h2>${rk}</h2><p>${s>=7?'Great job! Now try the Project tab.':'Review the Learn tab and try again.'}</p><button class=go onclick="quiz('${k}')">Retry</button> <button class=back onclick="openL('${k}','learn')">Learn</button></div>`}
+home();
+</script></body></html>
